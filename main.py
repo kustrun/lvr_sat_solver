@@ -6,7 +6,7 @@ import copy
 #Tests
 remainingVariables, conjunctiveClause = readDimacsFormat(sys.argv[1])
 
-values = {}
+values = {"2": False}
 status, solution = solveSat(conjunctiveClause, values, remainingVariables)
 
 print(status)

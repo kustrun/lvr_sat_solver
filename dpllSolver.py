@@ -8,6 +8,11 @@ def solveSat(clause, values, remainingVariables):
     elif isinstance(clause, type(F)) and clause == F:
         return F, {}
 
+    unitValues = getUnitValues(clause)
+
+    for key in unitValues:
+        values[key] = unitValues[key]
+
     randomVariable = pickRandomVariable(remainingVariables)
 
     values[randomVariable] = True
@@ -30,10 +35,26 @@ def solveSat(clause, values, remainingVariables):
 
     del values[randomVariable]
 
+    for key in unitValues:
+        if key in values:
+            del values[key]
+
     return F, {}
 
 def pickRandomVariable(remainingVariables):
     return remainingVariables[randint(0, len(remainingVariables) - 1)]
+
+def getUnitValues(clause):
+    unitValues = {}
+    for orLiteral in clause.conjunctionLiterals:
+        literals = orLiteral.disjunctionLiterals
+        if len(literals) == 1:
+            if isinstance(literals[0], Literal):
+                unitValues[literals[0].literal] = True
+            elif isinstance(literals[0], Not):
+                unitValues[literals[0].negatedLiteral.literal] = False
+
+    return unitValues
 
 def getRemainingVariables(clause):
 
