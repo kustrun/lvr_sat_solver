@@ -3,15 +3,20 @@ from random import randint
 import copy
 
 def solveSat(clause, values, remainingVariables):
-    if isinstance(clause, type(T)) and clause == T:
+    if clause == T:
         return T, values
-    elif isinstance(clause, type(F)) and clause == F:
+    elif clause == F:
         return F, {}
 
-    unitValues = getUnitValues(clause)
+    unitStatus, unitValues = getUnitValues(clause)
+    if unitStatus == F:
+        return F, {}
 
     for key in unitValues:
         values[key] = unitValues[key]
+
+        if int(key) in remainingVariables:
+            remainingVariables.remove(int(key))
 
     randomVariable = pickRandomVariable(remainingVariables)
 
@@ -21,7 +26,7 @@ def solveSat(clause, values, remainingVariables):
     leftRemainingVariables = getRemainingVariables(leftClause)
 
     leftStatus, leftValues = solveSat(leftClause, values, leftRemainingVariables)
-    if isinstance(leftStatus, type(T)) and leftStatus == T:
+    if leftStatus == T:
         return T, leftValues
 
     values[randomVariable] = False
@@ -30,7 +35,7 @@ def solveSat(clause, values, remainingVariables):
     rightRemainingVariables = getRemainingVariables(rightClause)
 
     rightStatus, rightValues = solveSat(rightClause, values, rightRemainingVariables)
-    if isinstance(rightStatus, type(T)) and rightStatus == T:
+    if rightStatus == T:
         return T, rightValues
 
     del values[randomVariable]
@@ -50,15 +55,23 @@ def getUnitValues(clause):
         literals = orLiteral.disjunctionLiterals
         if len(literals) == 1:
             if isinstance(literals[0], Literal):
+
+                if literals[0].literal in unitValues and unitValues[literals[0].literal] == False:
+                    return F, {}
+
                 unitValues[literals[0].literal] = True
             elif isinstance(literals[0], Not):
+
+                if literals[0].negatedLiteral.literal in unitValues and unitValues[literals[0].negatedLiteral.literal] == True:
+                    return F, {}
+
                 unitValues[literals[0].negatedLiteral.literal] = False
 
-    return unitValues
+    return T, unitValues
 
 def getRemainingVariables(clause):
 
-    if isinstance(clause, type(F)) and clause == F:
+    if clause == F:
         return []
 
     remainingVariables = []
