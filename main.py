@@ -1,11 +1,14 @@
 from readWrite import *
+from dpllSolver import *
 import sys
+import copy
 
 #Tests
-conjunctiveFormula = readDimacsFormat(sys.argv[1])
-print(conjunctiveFormula)
+remainingVariables, conjunctiveClause = readDimacsFormat(sys.argv[1])
 
-values = {1: False, 2:True, 3: True}
-print(conjunctiveFormula.evaluate(values))
+values = {}
+status, solution = solveSat(conjunctiveClause, values, remainingVariables)
 
-writeDimacsFormat(sys.argv[2], values)
+print(status)
+print(solution)
+print(conjunctiveClause.evaluate(solution))

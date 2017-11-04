@@ -25,16 +25,21 @@ def readDimacsFormat(fileName):
 
                     for i in range(0,splitClause.__len__()):    #Iterate over elements
                         number = int(splitClause[i])    #Get element int value
-                        splitClause[i] = (number if number > 0 else Not(abs(number))) #Rewrite element as element or its negation
+                        splitClause[i] = (str(number) if number > 0 else Not(str(abs(number)))) #Rewrite element as element or its negation
 
                     conjunctiveClause.conjunctionLiterals.append(Or(splitClause))   #Append Or clause to CNF
 
-                return conjunctiveClause #Return CNF
+                #Create array for storing information about remaining variables
+                remainingVariables = []
+                for i in range(1, int(parameters[1]) + 1):
+                    remainingVariables.append(str(i))
+
+                return remainingVariables, conjunctiveClause #Return values
 
 def writeDimacsFormat(fileName, values):
     with open(fileName, 'w') as f:
         for key, value in values.items(): #Iterate over dictonary keys and values
             if value:   #If values is true
-                f.write(str(key) + " ") #Return element
+                f.write(key + " ") #Return element
             else: #If value is false
-                f.write(str(-key) + " ") #Return negation of element
+                f.write(str(-int(key)) + " ") #Return negation of element
