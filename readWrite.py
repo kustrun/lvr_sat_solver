@@ -38,8 +38,11 @@ def readDimacsFormat(fileName):
 
 def writeDimacsFormat(fileName, values):
     with open(fileName, 'w') as f:
-        for key, value in values.items(): #Iterate over dictonary keys and values
-            if value:   #If values is true
-                f.write(key + " ") #Return element
-            else: #If value is false
-                f.write(str(-int(key)) + " ") #Return negation of element
+        if values == {}:
+            f.write("0")
+        else:
+            for key, value in values.items(): #Iterate over dictonary keys and values
+                if value:   #If values is true
+                    f.write(key + " ") #Return element
+                else: #If value is false
+                    f.write(str(-int(key)) + " ") #Return negation of element

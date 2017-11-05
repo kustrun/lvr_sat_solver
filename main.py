@@ -4,11 +4,9 @@ import sys
 import copy
 
 #Tests
-remainingVariables, conjunctiveClause = readDimacsFormat(sys.argv[1])
+remainingVariables, conjunctiveClause = readDimacsFormat("input/"+sys.argv[1])
 
-values = {"2": False}
+values = {}
 status, solution = solveSat(conjunctiveClause, values, remainingVariables)
 
-print(status)
-print(solution)
-print(conjunctiveClause.evaluate(solution))
+writeDimacsFormat ("output/"+sys.argv[2], values)
