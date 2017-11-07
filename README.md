@@ -7,8 +7,11 @@ Project on the course Logic in Computer Science at University of Ljubljana, Facu
 * Jernej Katanec
 
 ## Running
+When your program is executed, the name of the input and output files should be given as a command-line argument.
+
+If you have input file in folder `input` with name `file.txt` and you want to write the solution in `output` folder with name `out.txt` then your command should look like:
 ```
-python main.py "input_file.txt" "output_file.txt"
+python main.py "input/file.txt" "output/out.txt"
 ```
 
 ## Content
