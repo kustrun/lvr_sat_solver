@@ -17,4 +17,8 @@ python main.py "input/file.txt" "output/out.txt"
 ## Content
 All input files (test examples) are in "input" folder. Ouput files are automatically saved in "output" folder.
 
-New examples are based on Graph Colouring problem.
+New examples are based on Graph Colouring problem. The most interesting one is GC4. Command to test it:
+```
+python main.py "input/GC4.txt" "output/GC4.txt"
+```
+
