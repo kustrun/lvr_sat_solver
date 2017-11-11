@@ -16,11 +16,11 @@ def solveSat(clause, values, remainingVariables):
         values[key] = unitValues[key]
 
         if int(key) in remainingVariables:
-            remainingVariables.remove(int(key))
+            remainingVariables.remove(key)
 
-    randomVariable = pickRandomVariable(remainingVariables)
+    variable = pickRandomVariable(remainingVariables)
 
-    values[randomVariable] = True
+    values[variable] = True
     leftClause = And([])
     leftClause = clause.simplify(values, leftClause)
     leftRemainingVariables = getRemainingVariables(leftClause)
@@ -29,7 +29,7 @@ def solveSat(clause, values, remainingVariables):
     if leftStatus == T:
         return T, leftValues
 
-    values[randomVariable] = False
+    values[variable] = False
     rightClause = And([])
     rightClause = clause.simplify(values, rightClause)
     rightRemainingVariables = getRemainingVariables(rightClause)
@@ -38,7 +38,7 @@ def solveSat(clause, values, remainingVariables):
     if rightStatus == T:
         return T, rightValues
 
-    del values[randomVariable]
+    del values[variable]
 
     for key in unitValues:
         if key in values:

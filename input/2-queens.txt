@@ -1,5 +1,5 @@
 c 2 queens problem
-p 4 8
+p cnf 4 8
 1 2 0
 3 4 0
 -1 -2 0
