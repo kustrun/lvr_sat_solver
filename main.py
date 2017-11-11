@@ -1,12 +1,14 @@
 from readWrite import *
 from dpllSolver import *
+from generator import *
 import sys
-import copy
 
-#Tests
+writeDimacsFormat("input/45-queens.txt", 45, queensProblem(45))
+
+# Tests
 remainingVariables, conjunctiveClause = readDimacsFormat(sys.argv[1])
 
 values = {}
 status, solution = solveSat(conjunctiveClause, values, remainingVariables)
 
-writeDimacsFormat (sys.argv[2], values)
+writeResultDimacsFormat (sys.argv[2], values)

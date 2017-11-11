@@ -36,7 +36,19 @@ def readDimacsFormat(fileName):
 
                 return remainingVariables, conjunctiveClause #Return values
 
-def writeDimacsFormat(fileName, values):
+def writeDimacsFormat(fileName, n, clause):
+    with open(fileName, 'w') as f:
+        f.write("c " + str(n) + " queens problem\n")
+        f.write("p cnf " + str(n*n) + " " + str(len(clause)) + "\n")
+
+        for literal in clause:
+            for atom in literal:
+                f.write(str(atom) + " ")
+
+            f.write("0" + "\n")
+
+
+def writeResultDimacsFormat(fileName, values):
     with open(fileName, 'w') as f:
         if values == {}:
             f.write("0")
@@ -46,3 +58,4 @@ def writeDimacsFormat(fileName, values):
                     f.write(key + " ") #Return element
                 else: #If value is false
                     f.write(str(-int(key)) + " ") #Return negation of element
+
